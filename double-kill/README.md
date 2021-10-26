@@ -137,15 +137,79 @@ var monster = new Monster();
 
 monster
 
+这种方式也不好的一点是：使用方不知道该new啥？？ ？
+
 方法3: 寄生组合继承（Object.create）
 
 Object.create做了什么
 
-1、创建了一个对象
-2、把传的第一个参数挂在对象的proto上
+1、创建了一个对象 var a = Object.create()
+2、把传的第一个参数挂在对象的proto上{name: 'sunbai'}
 3、第二个参数merge到创建的新对象里
 {age: {value: 2}}
-4、
+4、a.name a.age均可以此方式访问
+
+
+e.g.
+
+function Body() {
+    this._bloodVolume = 1000;
+    this._attackVolum = 500;
+}
+Body.protoType.attack = function(body) {
+    this._bloodVolume -= body.getAttackVolume() - this._defenseVolume;
+}
+
+function Monster() {
+    this.name = 'sunbai';
+    Body.call(this);
+}
+
+<!-- 这样是不行的，因为会将父类子类会一起改
+Monster.protoType = Body.protoType; 要写成如下 -->
+
+Monster.protoType = Object.create(Body.protoType);
+
+var monster = new Monster();
+
+<!-- Monster.protoType.say -->
+
+方法4：es6 中的继承方式
+
+// 父类
+
+class Body {
+    constructor() {
+        this._bloodVolume = 1000;
+        this._attackVolume = 1000;
+    }
+
+    attacked(body) {
+        this._bloodVolume -= body.gethanshuming() - this._attackVolume;
+    }
+
+}
+
+// 子类
+
+class Monster extends Body {
+    constructor() {
+        // 继承
+        super();
+    }
+
+    // 重写
+    attacked() {
+        this._bloodVolume -=1;
+    }
+}
+
+inherits做了哪两件事
+
+1、把 monster 的 prototype 挂了一个新对象（obj.create(body)）
+2、把 monster 的 _proto_ 挂上了body
+
+
 
 
 
