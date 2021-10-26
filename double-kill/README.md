@@ -87,6 +87,7 @@ class sunbai {
 
 在原有对象的基础上稍作修改，得到一个新对象，并且不影响原有对象
 
+方法1：原型链继承
 
 function Body() {
     this._bloodVolum = 100;
@@ -104,7 +105,7 @@ Monster.prototype = new Body();
 var monster = new Monster();
 var monster2 = new Monster();
 
-monster._bloodVolum = 999  // 是因为这个语句是给monster这个实例上的赋值语句，在本身挂了个_bloodVolum,所以不用去 Body上找了，所以这种方式的修改在实例间不联动，而对象时联动是因为 对象有两个属性操作符 => monster.Volumes._bloodVolum,浏览器看到这句话的时候会想拿_bloodVolum，先要拿到【monster.Volumes】，monster.Volumes在monster上没有，所以需要去Monster上找，而monster._bloodVolum，要想拿到_bloodVolum，需要找到monster，还没到Monster那一步呢
+monster._bloodVolum = 999  // 是因为这个语句是给monster这个实例上的赋值语句，在本身挂了个_bloodVolum,所以不用去 Body上找了，所以这种方式的修改在实例间不联动，而对象时联动是因为 对象有两个属性操作符 => monster.Volumes._bloodVolum,浏览器看到这句话的时候会想拿_bloodVolum，先要拿到【monster.Volumes】，monster.Volumes在monster上没有，所以需要去Monster上找，而monster._bloodVolum，要想拿到_bloodVolum，需要找到monster，还没到Monster那一步呢,属性屏蔽规则
 
 <!-- 这样的话，改Monster1，Monster2也会改(这种情况只限于属性是对象的时候)，这种情况是不可接受的 -->
 
@@ -113,4 +114,40 @@ monster._bloodVolum = 999  // 是因为这个语句是给monster这个实例上�
 Monster.prototype.attack = function(body) {
     this.volumes._bloodVolum -= 1;
 }
+
+
+方法2：原型链 + 构造函数 继承
+
+function Body() {
+    this._bloodVolume = 1000;
+    this._attackVolum = 500;
+}
+Body.protoType.attack = function(body) {
+    this._bloodVolume -= body.getAttackVolume() - this._defenseVolume;
+}
+
+function Monster() {
+    Body.call(this);
+    <!-- 此时 Monster 上就会复刻 Body 上的所有属性，属性的冒充 -->
+};
+
+Monster.prototype = new Body();
+
+var monster = new Monster();
+
+monster
+
+方法3: 寄生组合继承（Object.create）
+
+Object.create做了什么
+
+1、创建了一个对象
+2、把传的第一个参数挂在对象的proto上
+3、第二个参数merge到创建的新对象里
+{age: {value: 2}}
+4、
+
+
+
+
 
