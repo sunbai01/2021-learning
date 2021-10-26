@@ -210,6 +210,8 @@ inherits做了哪两件事
 2、把 monster 的 _proto_ 挂上了body
 
 
+变量提升会优先提升function
+
 
 
 

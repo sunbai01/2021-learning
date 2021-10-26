@@ -146,8 +146,21 @@
 
         Monster.prototyp.draw = draw;
 
+        function RedMonster(initPos) {
+            Monster.call(this, initPos)
+            // 红魔王集体放大
+            this.imgPos= {
+                x: initPos.x,
+                y: initPos.y,
+                width: 40,
+                height: 40
+            }
+        }
+
+        RedMonster.prototype = Object.create(Monster.prototype);
+
         var monster = new Monster({x:2, y:3});
-        var monster2 = new Monster({x:2, y:3});
+        var monster2 = new RedMonster({x:2, y:3});
         var monster3 = new Monster({x:2, y:3});
 
         hero.draw();
