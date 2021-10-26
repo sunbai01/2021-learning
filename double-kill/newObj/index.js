@@ -105,32 +105,55 @@
                 )
         }
 
+        // 如果只有一个, 可以做单例
+        var hero = {
+            img: heroImg,
+            context: context,
+            imgPos: {
+                x: 0,
+                y: 0,
+                width: 32,
+                height: 32
+            },
+            rect: {
+                x: 0,
+                y: 0,
+                width: 32,
+                height: 32
+            },
+
+            draw: draw
+        }
+
         // 一个方法里面返回了个新对象
-        function monsterFactory() {
-            return {
-                img: heroImg,
-                context: context,
-                imgPos: {
-                    x: initX,
-                    y: initY,
-                    width: 30,
-                    height: 30
-                },
-                rect: {
-                    x: 0,
-                    y: 0,
-                    width: 40,
-                    height: 40
-                },
-                draw: draw
+        // 魔王这块再拆解，红衣魔王，黑衣魔王，如何不通过入参区分开，这里要说到继承
+        function Monster(initPos) {
+            this.img= heroImg,
+            this.context= context,
+            this.imgPos= {
+                x: initPos.x,
+                y: initPos.y,
+                width: 30,
+                height: 30
+            },
+            this.rect= {
+                x: 0,
+                y: 0,
+                width: 40,
+                height: 40
             }
         }
 
-        var monster = monsterFactory();
-        var monster2 = monsterFactory();
+        Monster.prototyp.draw = draw;
+
+        var monster = new Monster({x:2, y:3});
+        var monster2 = new Monster({x:2, y:3});
+        var monster3 = new Monster({x:2, y:3});
 
         hero.draw();
         monster.draw();
+        monster2.draw();
+        monster3.draw();
     }
 
     // 两个函数联合使用
