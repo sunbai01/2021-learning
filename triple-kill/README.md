@@ -98,4 +98,81 @@ add(1);
 add(1, 2);
 add(1, 2, 3);
 
+- 箭头函数
+
+function a() {
+    return b = () => {
+        console.log(this);
+        <!-- 箭头函数外部的函数 -->
+    }
+}
+
+var b = a();
+
+function c() {
+    b();
+}
+
+一个小工具函数，把一个字符串转成一个正则对象
+var regxFy = str => {
+    new RegExp(str);
+}
+
+在对象中，kv一样的话可以简写，function可以写成如下形式
+
+a: function() {
+
+}
+
+=>
+
+a() {
+
+}
+
+- es6 新增方法
+
+object.assign();
+
+<!-- 不要直接改对象的引用，尽量使用函数式的情况，用新的对象和返回值的形式去承接 -->
+
+旧：
+
+var params = {
+    url: 'http://www.taobao.com',
+    method: 'get'
+}
+
+function requestParamsProcess(params) {
+    params.url = params.url + '?q=1';
+}
+
+function request() {
+    requestParamsProcess(params);
+    console.log('params', params);
+}
+
+request();
+
+新：
+
+var params = {
+    url: 'http://www.taobao.com',
+    method: 'get'
+}
+
+// 这块有个大的优点就是可单测
+function requestParamsProcess(params) {
+    var paramsProcess = {};
+    object.assign(paramsProcess, params);
+    paramsProcess.url = paramsProcess.url + '?q=1';
+    return paramsProcess;
+}
+
+function request() {
+    var processParams = requestParamsProcess(params);
+    console.log('processParams', processParams);
+}
+
+request();
 
