@@ -400,4 +400,10 @@ pending fulfilled  rejected
 
 - 手写 promise 
 
+- 代理和反射
+
+- async、await
+
+- 装饰器 decorator(设计模式)
+
 
