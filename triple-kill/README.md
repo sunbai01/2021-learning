@@ -394,16 +394,6 @@ Promise.all([task1, task2])
         console.log('两个请求都请求完了')
     });
 
-- promise 的三种状态 ？？ 这里听的不太细
+- promise 的三种状态 ？？ 这里听的不太细，反正状态不能变更就对了
 
 pending fulfilled  rejected
-
-- 手写 promise 
-
-- 代理和反射
-
-- async、await
-
-- 装饰器 decorator(设计模式)
-
-
