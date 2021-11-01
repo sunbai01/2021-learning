@@ -1,5 +1,7 @@
 - 手写 promise 
 
+promise.js
+
 - 代理和反射
 
 实现一个代理：

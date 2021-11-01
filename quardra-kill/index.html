@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link></link>
+    <title> 手写 Promise</title>
+</head>
+<body>
+    <div id="container" class="container">
+        
+    </div>
+    <script type="text/javascript" src="./promise.js"></script>
+    <script type="text/javascript">
+        var promiseOld = (new Promise(
+            (resolve, reject) => {
+                setTimeout(()=> {
+                    resolve(111);
+                }, 3000)
+            }
+        ))
+            .then(function (res) {
+                console.log('res:', res);
+            })
+            promiseOld.then(function (res) {
+                console.log('res2:', res);
+            });
+    </script>
+</body>
+</html>
