@@ -1,17 +1,15 @@
 var defaultParams = {
-    var obj = { 
-        name: 1
+    name: 1,
+    getName: function() {
+        return defaultParams.name;
     },
-    getName () {
-        return obj.name;
-    },
-    setName() {
-        name = obj.name;
-        return name;
+    setName: function(name) {
+        defaultParams.name = name;
+        return defaultParams.name;
     }
 }
 
 module.export =  {
-    defaultParams.getName(),
-    defaultParams.setName();
+    getName: defaultParams.getName,
+    setName: defaultParams.setName
 }
