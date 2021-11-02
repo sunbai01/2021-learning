@@ -46,7 +46,7 @@ var newObj = require('./a.js')
 
 toString 匹配 require 个数，然后预先加载
 
-- esModule
+- es6 Module
 
 导出：
 const a = {}
@@ -71,12 +71,33 @@ import b from './a';
 
 如果 export default 要和 require 连用的话,引入的时候要这么写，
 
+// es6 抛出
 export.default {
     name: 11
 }
 
 export const age = 12;
 
+// es5 调用
 var a = require('./a');
-console.log('aaa:::', a.default, a.age);
+
+
+知识点：
+
+// es5 抛出
+module.exports.default = {
+
+}
+
+// es6 调用
+import a from a;
+---------------------------------------------
+
+- 浏览器模型
+
+
+
+
+
+
 
