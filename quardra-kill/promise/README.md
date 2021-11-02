@@ -137,7 +137,7 @@ request('http')
 
     })
 
-3、<!-- promise.then 是异步的，本身不是异步的 -->
+3、<!-- promise.then 是异步的，本身不是异步的，这里很重要 -->
 
 new Promise ((resolve, reject) => {
     console.log('111')
