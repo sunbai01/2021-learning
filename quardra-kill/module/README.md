@@ -93,7 +93,38 @@ module.exports.default = {
 import a from a;
 ---------------------------------------------
 
+私有变量：Symbol做私有变量
+
+var _symbol = Symbol();
+this[_symbol] = 'xxx';
+
 - 浏览器模型
+
+DOM 事件模型 和 事件流
+
+阻止冒泡行为
+
+stopPropagation()
+
+stopImmediatePropagation()
+或者 remove 插件里绑定的click 事件
+
+阻止默认行为:（可以使点击没反应）
+e.preventDefault();
+
+- 
+
+sessionStorage localStorage cookie 之间
+
+localStorage 比较能存，其实最主要的区别不是存储大小
+
+cookie 会被携带到服务端，可以存放服务端和前端共同维护的信息，负责前后端的来回交互
+
+localStorage 是持久化的本地存储，sessionStorage会话级别的存储（要求在同一浏览器窗口才能互相读取）
+
+
+
+
 
 
 
