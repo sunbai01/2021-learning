@@ -17,16 +17,31 @@ class Manager {
 
     init() {
         this.appendData();
-        this.detectLoadData();
+        this.detectReachBottom(()=> {
+            // 加载一屏数据
+            this.appendData();
+            // 日志打到server端让他们去做模型训练;
+            this.rizhi();
+        });
     }
 
+    getData() {
+        utils.request({
+            url: './list'
+        })
+            .then(res => {
+                localStorage.setItem('newsData', JSON.stringify(res));
+                return res;
+            })
+            .catch(err => {
+                return JSON.parse(localStorage.getItem('newsData') || '{}');
+            })
+    }
+    // 做缓存的话，封装一个getData
     appendData() {
         // console.log('utils:::', utils.parseUrl);
         // this.$ele.innerHTML = 'sunbai'
-        utils.request({
-            url: './list',
-
-        })
+        this.getData()
             .then(res => {
                 // console.log('res', res);
                 const items = res.data;
@@ -39,17 +54,22 @@ class Manager {
                     const currentComponent = new Component(item);
                     const element = currentComponent.constructoElement();
                     this.$container.append(element);
-                })
+                });
                 // 跑通父类了
                 // items.forEach((item) => {
                 //     // const component = new Component();
                 //     // const componentElement = component.componentElement();
                 //     // this.$ele.appendChild(componentElement);
                 // });
-            });
+            })
+            .catch(err => {
+
+            })
     }
 
-    detectLoadData() {
+    // 依赖注入，只有用你的人才知道触底做了什么
+    detectReachBottom(callback = () => {}) {
+        const THERESHOLD = 50;
         window.onScroll = () => {
             // 文档高度
             const offsetHeight = document.documentElement.offsetHeight;
@@ -59,9 +79,8 @@ class Manager {
             const scrollY = window.scrollY;
             const gap = offsetHeight - (screenHeight + scrollY);
             console.log('gap', gap);
-            if (gap < 50) {
-                // 加载一屏数据
-                this.appendData();
+            if (gap < THERESHOLD) {
+                callback();
             }
         }
     }
