@@ -18,38 +18,29 @@
         <!-- 由此可见指令里面不用{{}} -->
         <div v-for="(item, key) in list">
             <!-- 单图多图交叉循环 -->
-            <div v-if="item.type === singlePic" class="item single-pic">
-                <div class="content">
-                    <span>
-                        {{item.data.title}}
-                    </span>
-                </div>
-                <img v-bind:src="item.data.imgList[0]" />
-            </div>
-            <div v-else class="item multile-pic">
-                <div class="content">
-                    <span>
-                        {{item.data.title}}
-                    </span>
-                </div>
-            </div>
-            </div class="image-list">
-                <img
-                    v-for="imagePath in item.data.imageList"
-                    v-bind:src="imagePath"
-                />
-            </div>
+            <!-- 这里可以用中划线来代替帕斯卡（比驼峰多了个首字母大写）的形式 -->
+            <single-pic v-bind:item="item" v-if="item.type === 'singlePic'"></single-pic>
+            <multiplePic v-bind:item="item" v-else></multiplePic>
         </div>
     </div>
 </template>
 
 <script>
+import multiplePic from './items/multiple-pic.vue';
+import singlePic from './items/single-pic.vue';
+
 export default {
+  components: { singlePic },
     // 小程序框架, 不这么做的原因是会改引用
     // data: {
     //     // 如果是这样的话
     //     person: 'sunbai'
     // },
+    // components 声明的方式
+    components: [
+        multiplePic,
+        singlePic
+    ],
     data() {
         return {
             person: 'sunbai',
@@ -76,3 +67,4 @@ export default {
     }
 }
 </script>
+SinglePic
