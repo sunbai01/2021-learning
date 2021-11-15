@@ -19,6 +19,7 @@
         <div v-for="(item, key) in list">
             <!-- 单图多图交叉循环 -->
             <!-- 这里可以用中划线来代替帕斯卡（比驼峰多了个首字母大写）的形式 -->
+            <!-- v-bind:item="item" 可以写成 v-bind="item.data" -->
             <single-pic v-bind:item="item" v-if="item.type === 'singlePic'"></single-pic>
             <multiplePic v-bind:item="item" v-else></multiplePic>
         </div>
