@@ -21,7 +21,8 @@
             <!-- 这里可以用中划线来代替帕斯卡（比驼峰多了个首字母大写）的形式 -->
             <!-- v-bind:item="item" 可以写成 v-bind="item.data", 消除难看的数据结构, 子组件就是imageList + title -->
             <single-pic v-bind:item="item" v-if="item.type === 'singlePic'"></single-pic>
-            <multiplePic v-bind="item.data" v-else></multiplePic>
+            <multiplePic v-bind="item.data" v-else-if="item.type === 'multiplePic'"></multiplePic>
+            <agriculture v-else v-bind="item.data"></agriculture>
         </div>
     </div>
 </template>
@@ -29,6 +30,8 @@
 <script>
 import multiplePic from './items/multiple-pic.vue';
 import singlePic from './items/single-pic.vue';
+import Agriculture from './items/agriculture.vue';
+
 
 export default {
   components: { singlePic },
@@ -40,7 +43,8 @@ export default {
     // components 声明的方式
     components: [
         multiplePic,
-        singlePic
+        singlePic,
+        Agriculture
     ],
     data() {
         return {
