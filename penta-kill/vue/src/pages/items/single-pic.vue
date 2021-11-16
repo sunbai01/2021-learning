@@ -22,7 +22,7 @@ export default {
         // 依赖了其他数据
         imageUrl() {
             return this.imgList[0];
-        }
+        } 
     },
     create() {
 
