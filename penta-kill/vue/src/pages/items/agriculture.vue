@@ -7,7 +7,8 @@
         <input type="text" v-on:input="onInput"/>
         <span>地区为: {{area}}</span>
         <button v-on:click="changePosition"></button>
-        <span>猪价为: {{price}}</span>
+
+        <span>猪价为: {{price | addCount}}</span>
     </div>
 </template>
 
@@ -33,6 +34,12 @@ export default {
             this.queryPigPrice(newArea);
         }
     },
+    // 语法和场景，用来format
+    filters: {
+        addCount(price) {
+            return price + '元'
+        }
+    },
     methods: {
         // 思想记一下，语法背一下就行
         changePosition() {
@@ -48,7 +55,10 @@ export default {
                 })
                 .then(
                     priceRes => {
-                        console.log('priceRes', priceRes);
+                        console.log('priceRes', priceRes.infos[0].price);
+                        // 如果我们的价格是要 加个 中文固定元素，最好的方式是不要写在业务逻辑中，要写在业务视图中，但如果这种重复的元素很多，最好的方式是要
+                        // 用 filters
+                        this.price = priceRes.infos[0].price;
                     }
                 )
         }
