@@ -32,6 +32,14 @@ import multiplePic from './items/multiple-pic.vue';
 import singlePic from './items/single-pic.vue';
 import Agriculture from './items/agriculture.vue';
 
+const THERESHOLD = 100;
+// 节流：
+const throttle = (fn, delay = 1000) => {
+    setTimeout(() => {
+        fn && fn();
+    }, delay)
+}
+ 
 
 export default {
   components: { singlePic },
