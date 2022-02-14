@@ -13,19 +13,8 @@
 
 <script>
 
-const THERESHOLD = 50;
-// 去抖：debounce
-const createDebounce = (delay = 1000) => {
-    let timmer = null;
-    return function debounce(fn) {
-        // 打断
-        clearTimeout(timmer);
-        // 重新计时
-        timmer = setTimeout(() => {
-            fn && fn();
-        }, delay);
-    }; 
-}
+import {createDebounce} from './utils';
+import {THERESHOLD} from './config';
 
 
 export default {
