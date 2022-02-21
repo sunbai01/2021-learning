@@ -13,7 +13,6 @@
 
 <script>
 
-import {createDebounce} from './utils';
 import {THERESHOLD} from './config';
 
 
@@ -23,10 +22,11 @@ export default {
         return {
             area: '北京',
             price: '暂无',
-            debounce: createDebounce(3000)
+            debounce: this.createDebounce(3000)
         };
     },
     create() {
+        // 可以this这么用的好处是不用import也不用定义
         this.createDebounce();
         // 既然地区和价格是联动的，不用在每个地方都用queryPigPrice，业务中不要这么做，做到只与数据强相关
         // 是下面watch关键字的api形式，api的形式可以动态watch

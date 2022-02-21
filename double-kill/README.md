@@ -47,7 +47,7 @@ bindedBody();
 var monster = newObj;
 
 
-<!-- 这种情况可以共享Body这个构造函数里的值，也就是 monster 和 monster2 都是实例，改实例中的谁另一个都会跟着改，那么这个东西有什么用呢? -->
+<!-- 这种情况可以共享Body这个构造函数里的值，也就是 monster 和 monster2 都是实例，改实例中的谁另一个都会跟着改，？？？QA3:那么这个东西有什么用呢？？？ -->
 
 
 function Body() {}

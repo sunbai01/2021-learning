@@ -9,4 +9,5 @@
 // 动态组件
 export {default as MultiplePic} from './multiple-pic.vue';
 export {default as SinglePic} from './single-pic.vue';
-export {default as Agriculture} from './agriculture.vue';
+// 不用全局引，这里做一个按需引入
+// export {default as Agriculture} from './agriculture.vue';
