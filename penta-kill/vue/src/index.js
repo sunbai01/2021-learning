@@ -4,9 +4,49 @@
 */
 
 import Vue from 'vue';
+import VueRouter from 'vue-router';
 import Main from './pages/main.vue';
 import {utils} from './utils';
 import echarts from 'echarts';
+
+Vue.use('VueRouter');
+// 配置文件
+const routes = [
+    {
+        path: '/page',
+        component: Main
+    },
+    {
+        path: '/setting',
+        component: Setting
+    },
+    {
+        // :id这种匹配符意思是后面可以加id，不要写死
+        path: '/detail/:id',
+        component: Detail,
+        // id可以当做props传给Detail组件，这样的设计方便路由间传递数据
+        props: true,
+        // 这样定义好之后，需要到Detail组件里去定义一次 router-view 组件
+        children: [
+            {
+                path: 'video',
+                component: Video
+            },
+            {
+                path: 'text',
+                component: Text
+            }
+        ]
+    }
+];
+
+const router = new VueRouter({
+    routes
+});
+
+// 不好的调试方法：
+// window.router = router;
+
 
 // 用函数描述元素的创建过程
 // vue 和 css 会被编译成js，一切都是js
@@ -28,9 +68,20 @@ var component = {
 
 const THERESHOLD = 100;
 const vm = new Vue({
+
     el: '#app',
-    render: h => h(component)
+
+    router,
+
+    // render: h => h(component)
+    render(createElement) {
+        return createElement('router-view');
+    }
 });
+
+// 在业务方法中用的时候需要将 window.location.hash = '#/setting' 改为
+// this.$router.push('/setting'); (跳转API)
+// 或者整体用 <router-link to="/page"> 组件
 
 // 一个东西全局用：
 // 1、mixin的方式：mixin的时候需要知道挂在哪，挂在method上还是data上得整一下子
