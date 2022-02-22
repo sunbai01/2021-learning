@@ -5,6 +5,7 @@
 
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import VueRouter from './vue-fake-router';
 import Main from './pages/main.vue';
 import {utils} from './utils';
 import echarts from 'echarts';
@@ -41,7 +42,8 @@ const routes = [
 ];
 
 const router = new VueRouter({
-    routes
+    routes,
+    mode: 'history'
 });
 
 // 不好的调试方法：
