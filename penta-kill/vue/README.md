@@ -52,5 +52,8 @@ Promise.resolve().then(res => {console.log('res')}).then(test());
 
 <!-- 缺乏基础设施，走流程，搞单测流水线，留buffer时间，git commit的hook自动跑单测 -->
 
+todo：
+flow / TypeScript
+
 
 
