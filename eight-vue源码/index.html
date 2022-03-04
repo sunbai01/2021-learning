@@ -9,6 +9,68 @@
 
         </div>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue">
+            class Dep {
+                constructor() {
+                    // 谁监听了我
+                    this.subs = [];
+                }
+
+                notify() {
+                    const subs = this.subs.slice();
+                    for(let i =0, len = this.subs.length; i< len; i++){
+                        this.subs[i].update();
+                    }
+                }
+
+                addSub(sub) {
+                    if (this.subs.indexOf(sub) === -1) {
+                        this.subs.push(sub);
+                    }
+                }
+
+                addDepend() {
+                    Dep.targets[Dep.targets.length - 1].addDep(this);
+                }
+            }
+            Dep.targets = [];
+
+            function pushTarget(instance) {
+                // instance 众矢之地，接下来发生的所有依赖，都算在这个instance头上
+                Dep.targets.push(instance);
+            }
+
+            function popTarget() {
+                return Dep.targets.pop();
+            }
+
+            // 每次获取数据用getter
+            class watcher{
+
+                constructor(getter, callback){
+                    this.callback = callback;
+                    this.getter = getter;
+                    this.value = this.get();
+                }
+
+                get() {
+                    // 纪录一下我自己
+                    // window.xxx = 我自己
+                    // window.watcher = this;
+                    pushTarget(this);
+                    let value = this.getter();
+                    popTarget();
+                    return value;
+                }
+
+                addDep(dep) {
+                    dep.addSub(this);
+                }
+
+                update() {
+                    let newVal = this.get();
+                    this.value = newVal;
+                }
+            }
         </script>
         <script>
             function proxy(target, data, key) {
@@ -22,44 +84,66 @@
                     }
                 })
             }
-            
-            function walk(obj, updateCb) {
-                Object.keys(obj)
-                    .forEach(key => {
-                        if (typeof obj[key] === 'object'
-                            && obj[key] != null)
-                        {
-                            walk(obj[key], updateCb);
-                        }
-                        defineReactive(obj, key, obj[key], updateCb);
-                    })
-                return obj;
+
+            class observer {
+
+                constructor(obj) {
+                    this.walk(obj);
+                }
+
+                walk(obj) {
+                    Object.keys(obj)
+                        .forEach(key => {
+                            if (typeof obj[key] === 'object'
+                                && obj[key] != null)
+                            {
+                                walk(obj[key]);
+                            }
+                            defineReactive(obj, key, obj[key]);
+                        })
+                    return obj;
+                }
             }
 
-            function defineReactive (obj, key, value, updateCb) {
+            function defineReactive(obj, key, value) {
+                const dep = new Dep();
                 Object.defineProperty(obj, key, {
                     get() {
+                        console.log('xxx', key);
+                        // 添加到window.watcher.depdencies.add(this);
+                        if (Dep.targets.lenght > 0) {
+                            dep.addDepend();
+                        }
                         return value;
                     },
                     set(newVal) {
                         value = newVal;
+                        dep.notify();
+                        // 通知刷新
                         console.log('set-current', newval);
-                        updateCb && updateCb();
                     }
                 })
-
             }
 
             class Vue {
                 constructor(options) {
                     this.$el = document.querySelector(option.el);
                     this._data = options.data && options.data();
+                    new observer(this._data);
+
                     for (let key in this._data) {
                         // this[key] = data[key];
                         proxy(this, this._data, key);
                     }
                     this.price();
                     this.render = options.render;
+
+                    new Watcher(() => {
+                        this._update();
+                    }, () => {
+                        console.log('callback');
+                    });
+
                     this._update();
                 }
 
@@ -106,11 +190,12 @@
                     return {
                         price: '27',
                         infos: {
-                            title: '猪肉的价格'
+                            title: '猪肉的价格',
+                            placeholder: 'sunbai'
                         }
                     }
                 },
-
+                // 依赖分析
                 render(createElement) {
                     // createElement 这个函数接受三个参数
                     return createElement(
@@ -136,3 +221,13 @@
         </script>
     </body>
 </html>
+
+<!-- 复盘一遍 -->
+<!-- 两条线 -->
+observer 和 watcher
+
+watcher调方法
+
+observer调属性
+
+有一个亮点：
