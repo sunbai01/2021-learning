@@ -22,11 +22,31 @@ Object.defineProperty(obj, 'name', {
     <!-- 修改对象的值 -->
     set(newnName) {
         console.log('tovalue', newnName);
+        <!-- 私有的 name -->
         this._name = newName;
     },
     <!-- 获取对象的值 -->
     get() {
         console.log(this._name);
-        return 'sunbai';
+        return this._name;
     }
 })
+
+<!-- 或者我们用闭包的方式 -->
+var obj = {};
+function defineName(obj) {
+    // 闭包变量
+    let name = "";
+    Object.defineProperty(obj, 'name', {
+        set(newName) {
+            <!-- 开始渲染 -->
+            name = newNname;
+        },
+        get() {
+            return name;
+        }
+    })
+}
+defineName(obj);
+
+data 修改通知 vm 去修改 view

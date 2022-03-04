@@ -5,14 +5,103 @@
         <title></title>
     </head>
     <body>
-        <div>
+        <div id="app">
 
         </div>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue">
         </script>
         <script>
+            function proxy(target, data, key) {
+                Object.defineProperty(target, key, {
+                    get() {
+                        return data[key];
+                    },
+                    set(newVal) {
+                        console.log('seting!!!', newVal);
+                        data[key] = newVal;
+                    }
+                })
+            }
+            
+            function walk(obj, updateCb) {
+                Object.keys(obj)
+                    .forEach(key => {
+                        if (typeof obj[key] === 'object'
+                            && obj[key] != null)
+                        {
+                            walk(obj[key], updateCb);
+                        }
+                        defineReactive(obj, key, obj[key], updateCb);
+                    })
+                return obj;
+            }
+
+            function defineReactive (obj, key, value, updateCb) {
+                Object.defineProperty(obj, key, {
+                    get() {
+                        return value;
+                    },
+                    set(newVal) {
+                        value = newVal;
+                        console.log('set-current', newval);
+                        updateCb && updateCb();
+                    }
+                })
+
+            }
+
+            class Vue {
+                constructor(options) {
+                    this.$el = document.querySelector(option.el);
+                    this._data = options.data && options.data();
+                    for (let key in this._data) {
+                        // this[key] = data[key];
+                        proxy(this, this._data, key);
+                    }
+                    this.price();
+                    this.render = options.render;
+                    this._update();
+                }
+
+                // 循环创建好了一个 dom ，
+                _createElement(tagName, data, children) {
+                    // 创建一个元素
+                    const tag = document.createElement('div');
+                    const {attrs = {}} = data;
+                    for (let attrName in attrs) {
+                        tag.setAttribute(attrName, attrs[attrName]);
+                    }
+                    // tag 是 dom 元素
+                    if (Object.prototype.toString.call(children) !== '[object Array]'
+                    ) { 
+                        let child = document.createTextNode(children);
+                        tag.appendChild(child);
+                    }
+                    else {
+                        children.forEach(child => {
+                            tag.appendChild(child);
+                        })
+                    }
+                    return tag;
+                }
+
+                _update() {
+                    const root = this.render(this._createElement);
+                    api.replaceChild(this.$el, $root);
+                }
+            }
+
+            // 小工具函数
+            const api = {
+                replaceChild(oldElement, element) {
+                    return oldElement.parentNode
+                        .replaceChild(element, oldElement);
+                }
+            };
+
             window.app = new Vue({
                 el: '#app',
+                // 为什么要写成一个函数的理解
                 data() {
                     return {
                         price: '27',
@@ -21,14 +110,27 @@
                         }
                     }
                 },
+
                 render(createElement) {
-                    return createElement('div', {
-                        attrs: {
-                            title: this.infos.title
-                        }
-                    }, [
-                        createElement('span', {}, this.price)
-                    ]);
+                    // createElement 这个函数接受三个参数
+                    return createElement(
+                        'div',
+                        {
+                            attrs: {
+                                title: '猪肉价格'
+                                // title: this.infos.title
+                            }
+                        },
+                        // 他的孩子
+                        [
+                            createElement(
+                                'span',
+                                {},
+                                27
+                                // this.price
+                            )
+                        ]
+                    );
                 }
             });
         </script>
