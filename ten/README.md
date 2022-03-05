@@ -49,8 +49,26 @@ app.css 会被每个页面引
 
 传递组件数据的方式，直接写props等于啥，例如data = {{data}}，子组件直接 data.title
 
+# 进阶：底层原理 && 架构实现
 
+微信客户端，小程序页面跳转比h5舒服点
 
+每次微信初始化的时候，会创建一个web-view（chorom的一个tab）在上面，调navigatorTo的时候相当于web-view的覆盖，
+
+如何做到app.js共享于baidu，taobao页面（两个页面互相改对方的对象）？
+
+小程序框架：把两个web-view的js和app.js放在一个进程（一个web-view）里，俗称js-core，相当于把所有的js拿出来放在一个worker（service）里【这在编译时做】
+
+setData 和 点击事件 通过消息传递给视图层，简称通讯，为什么setData不能频繁调，因为会往返于两个进程，拖慢速度（不停的双向通讯）
+
+api就没碰过dom，querySelector这是个假api，为什么假呢，因为他是异步的，只是返回数据，碰不到dom
+
+rpx 和 view 是怎么识别的？
+view其实就是一个自定义组件，本质是 template 里有 span 和 slot ，区别在于 属性，这些高阶属性就是对外暴露的 props ,重建 web 生态系统，这是一个宏大的愿景
+
+TODO：怎么把 js 放一起的呢？
+
+技能图谱 && 学习曲线图
 
 
 

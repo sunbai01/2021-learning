@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>wx小程序</title>
+    </head>
+    <body>
+        <iframe src='/page/detail/detail'></iframe>
+        <script type="text/javascript">
+            class Service {
+                createView(url) {
+                    const iframe = document.createElement('iframe');
+                    iframe.src = url;
+                    iframe.id = id;
+                    document.body.append(iframe);
+                },
+                setData(id, data) {
+                    
+                }
+            }
+        </script>
+    </body>
+
+</html>
