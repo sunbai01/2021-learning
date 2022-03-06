@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>小程序视图层</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script src="vue的cdn"></script>
+        <script type="wxml">
+            <!-- TODO：点击事件 -->
+            <wx-text v-on:tap="tap">
+                这是详情页面 {{name}}
+            </wx-text>
+        </script>
+        <script type="text/javascript">
+           let vm = null ;
+            window.__bridge.onMessage(res => {
+                console.log('res:::', res);
+                if(res.type === 'initSet'){
+                    vm = new Vue ({
+                        data(){
+                            return res.data;
+                        },
+                        components: {
+                            'wx-text': {
+                                template: `<span> 
+                                    <slot></slot>
+                                </span>`
+                            }
+                        },
+                        // 如何做数据绑定呢，开发者肯定要这么写：<wx-text>这是详情页面{{name}}</wx-text>
+                        template: document.querySelector('type=["wxml"]').innerHTML
+                    });
+                }
+                else if (res.type == 'setData') {
+                    for(let key in res.data) {
+                        vm[key] = res.data[key];
+                    }
+                }
+                
+                vm.$mount('#app');
+            });
+        </script>
+    </body>
+</html>
