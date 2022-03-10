@@ -165,9 +165,10 @@ listDataManager.getData()
 
 # this
 
-// this 是什么 ？
+1、 this 是什么 ？
 
-this的使用场景
+
+2、this的使用场景
 
 场景一:
 
@@ -190,8 +191,8 @@ var monster = {
     name: 'wangyang',
     execution: execution
 }
-monster.execution();
-person.execution();
+monster.execution(); // wangyang
+person.execution(); // sunbai
 
 场景三:
 
