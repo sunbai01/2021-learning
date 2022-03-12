@@ -110,8 +110,37 @@ class Person {
 
 在原有对象的基础上稍作修改，得到一个新对象，并且不影响原有对象
 
-方法1：原型链继承
+## 方法1：原型链继承
 
+### 会改的情况
+
+function Body() {
+    <!-- 变化是这里 -->
+    this.volumes = {
+        _bloodVolum: 100,
+        _attackVolum: 500   
+    }
+}
+
+Body.prototype.attack = function(body) {
+    this.volumes._bloodVolum -= body.getAttackVolum() - this.volumes._attackVolum;
+}
+
+<!-- 子类 -->
+function Monster() {};
+
+<!-- 重点是这句，子类的 prototype 直接连在父类上 -->
+Monster.prototype = new Body();
+
+var monster = new Monster();
+var monster2 = new Monster();
+
+monster._bloodVolum = 999
+
+<!-- 这样的话，改Monster1，Monster2也会改(这种情况只限于属性是对象的时候)，这种情况是不可接受的 -->
+<!-- 为什么会改呢，因为两个子实例都没有定义_bloodVolum，他们会去Monster上找，找不到，都再去Body上找，Body上有且指向同一个，所以会互相改 -->
+### 不会改的情况
+<!-- 父类 -->
 function Body() {
     this._bloodVolum = 100;
     this._attackVolum = 500;
@@ -121,48 +150,45 @@ Body.prototype.attack = function(body) {
     this.volumes._bloodVolum -= body.getAttackVolum() - this._attackVolum;
 }
 
+<!-- 子类 -->
 function Monster() {};
 
+<!-- 重点是这句，子类的 prototype 直接连在父类上 -->
 Monster.prototype = new Body();
-<!-- 子类的 prototype 直接连在父类上 -->
+
 var monster = new Monster();
 var monster2 = new Monster();
 
-monster._bloodVolum = 999  // 是因为这个语句是给monster这个实例上的赋值语句，在本身挂了个_bloodVolum,所以不用去 Body上找了，所以这种方式的修改在实例间不联动，而对象时联动是因为 对象有两个属性操作符 => monster.Volumes._bloodVolum,浏览器看到这句话的时候会想拿_bloodVolum，先要拿到【monster.Volumes】，monster.Volumes在monster上没有，所以需要去Monster上找，而monster._bloodVolum，要想拿到_bloodVolum，需要找到monster，还没到Monster那一步呢,属性屏蔽规则
+monster._bloodVolum = 999  
 
-<!-- 这样的话，改Monster1，Monster2也会改(这种情况只限于属性是对象的时候)，这种情况是不可接受的 -->
+// 是因为这个语句是给monster这个实例上的赋值语句，在本身挂了个_bloodVolum,所以不用去 Body上找了,这种方式的修改在实例间不联动
+// 而上面那种方式联动是因为 对象有两个属性操作符 => monster.Volumes._bloodVolum,浏览器看到这句话的时候会想拿_bloodVolum，先要拿到【monster.Volumes】，monster.Volumes在monster上没有，所以需要去Monster上找，而monster._bloodVolum，要想拿到_bloodVolum，需要找到monster，还没到Monster那一步呢,属性屏蔽规则
 
-<!-- 属性没有受影响 -->
+## 方法2：原型链 + 构造函数 继承
 
-Monster.prototype.attack = function(body) {
-    this.volumes._bloodVolum -= 1;
-}
-
-
-方法2：原型链 + 构造函数 继承
-
-function Body() {
+function Body(name) {
     this._bloodVolume = 1000;
     this._attackVolum = 500;
+    this.name = name;
 }
 Body.protoType.attack = function(body) {
     this._bloodVolume -= body.getAttackVolume() - this._defenseVolume;
 }
 
-function Monster() {
-    Body.call(this);
-    <!-- 此时 Monster 上就会复刻 Body 上的所有属性，属性的冒充 -->
+<!-- 此时 Monster 上就会复刻 Body 上的所有属性，属性的冒充 -->
+function Monster(name) {
+    Body.call(this, name);
 };
 
 Monster.prototype = new Body();
 
-var monster = new Monster();
+var monster = new Monster(name);
+var monster2 = new Monster(name);
 
-monster
 
-这种方式也不好的一点是：使用方不知道该new啥？？ ？
+这种方式也不好的一点是：使用方不知道该new啥，因为传参不知道传啥，需要先有一个样例
 
-方法3: 寄生组合继承（Object.create）
+## 方法4: 寄生组合继承（Object.create）
 
 Object.create做了什么
 
@@ -197,7 +223,7 @@ var monster = new Monster();
 
 <!-- Monster.protoType.say -->
 
-方法4：es6 中的继承方式
+## 方法5：es6 继承
 
 // 父类
 
@@ -213,27 +239,18 @@ class Body {
 
 }
 
-// 子类
+// 子类继承用 extends 
 
 class Monster extends Body {
     constructor() {
-        // 继承
         super();
     }
 
-    // 重写
+    // 重写方法
     attacked() {
         this._bloodVolume -=1;
     }
 }
-
-inherits做了哪两件事
-
-1、把 monster 的 prototype 挂了一个新对象（obj.create(body)）
-2、把 monster 的 _proto_ 挂上了body
-
-
-变量提升会优先提升function
 
 
 

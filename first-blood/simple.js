@@ -5,7 +5,7 @@ function executionFuncOuter(){
     function executionFuncInner(){
         // executionContext(执行上下文)包含
         // scopeChain
-        // variableObject（涉及变量提升 hoisting）
+        // variableObject（涉及变量提升 hoisting[变量提升会优先提升function]）
         // this
     }
 }

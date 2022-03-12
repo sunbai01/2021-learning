@@ -2,43 +2,52 @@
 <html>
     <head>
         <title>小程序视图层</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1 minimum-scale=1, user-scalable=no">
+        <style>
+        </style>
     </head>
     <body>
         <div id="app"></div>
-        <script src="vue的cdn"></script>
         <script type="wxml">
-            <!-- TODO：点击事件 -->
+            <!-- 开发者在小程序里会这么写 ,点击给逻辑层再发过去-->
             <wx-text v-on:tap="tap">
                 这是详情页面 {{name}}
             </wx-text>
         </script>
+        <script type="text/javascript" src="./bridge.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+        <!-- 比如用vue怎么写一个组件？用template。e.g -->
         <script type="text/javascript">
-           let vm = null ;
+            let vm = null;
+            // 逻辑层 postMessage，视图层 onMessage, 接下来要更新视图层{{data}}
             window.__bridge.onMessage(res => {
-                console.log('res:::', res);
-                if(res.type === 'initSet'){
-                    vm = new Vue ({
-                        data(){
+                console.log('res', res);
+                // 接下来要实现setData
+                if (res.type === 'initSet') {
+                    // vue 的自定义组件
+                    vm = new Vue({
+                        el: '#app',
+                        data() {
+                            console.log('res', res.data);
                             return res.data;
                         },
                         components: {
                             'wx-text': {
-                                template: `<span> 
-                                    <slot></slot>
-                                </span>`
+                                template: `<span><slot></slot></span>`
                             }
                         },
-                        // 如何做数据绑定呢，开发者肯定要这么写：<wx-text>这是详情页面{{name}}</wx-text>
-                        template: document.querySelector('type=["wxml"]').innerHTML
+                        // template: `<wx-text>这是详情{{data}}</wx-text>`
+                        template: document.querySelector('[type="wxml"]').innerHTML
                     });
                 }
-                else if (res.type == 'setData') {
-                    for(let key in res.data) {
+                else if (res.type === 'setData'){
+                    for (let key in res.data) {
                         vm[key] = res.data[key];
                     }
                 }
                 
-                vm.$mount('#app');
+                // vm.$mount('#app');
             });
         </script>
     </body>

@@ -15,7 +15,26 @@
         <script type="text/javascript" src="./bridge.js">
         </script>
         <script>
-            window.logic.navigateTo();
+            // 编译之后的代码
+            window.appJson = {
+                "pages": [
+                    'pages/index/index',
+                    'pages/detail/detail'
+                ],
+                "window": {
+                    "backgroundTextStyle": "light"
+                },
+                "sitemapLocation": "sitemap.json"
+            }
+            Page('pages/index/index', {
+                data: {
+                    name: sunbai
+                }
+            });
+           
+        </script>
+        <script>
+            window.logic.init();
         </script>
     </body>
 </html>
