@@ -90,4 +90,5 @@ openId ：uid + appid
 
 querySelector为什么设置成异步的？
 
-onload onready 
+onload
+onready 视图层render完后告诉逻辑层渲染完成，然后逻辑层触发onReady

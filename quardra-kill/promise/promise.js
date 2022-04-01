@@ -1,7 +1,24 @@
-// 手写一个promise
+// 一个简单的promise
+//Promise 接收一个回调函数，回调函数需要传两个方法：resolve, reject
+let promise = new Promise((resolve, reject) => {
+    // resolve控制then什么时候执行
+    setTimeout(()=> {
+        console.log('resolve');
+        resolve(111)
+    }, 3000);
+})
+.then(function(res) {
+    console.log('res', res);
+})
+
+// 知识点:promise里面是同步的，只有then是异步的
+--------------------------------------------------------
+
+// 如何手写一个promise
 (function(global) {
-    // 接收一个回调函数，会在创建的时候执行一下processor
+    // 定义一个promise的类
     function Promise(processor){
+        // 会在创建的时候执行一下processor
         // 定义一个状态为pending，pending的时候不执行任何函数
         this._status = 'pending';
 
@@ -9,6 +26,7 @@
             // resolve 函数，如果resolve被包在setTimeout里的话，then就会先执行，回调先挂上去，resolve 执行时执行回调，逻辑通
             // 但如果resolve 没包延时，先执行的话，会报错，因为此时 then 里面的 onFulFilled 还没挂上去，无法执行 this.onFulFilled
             res => {
+                this._status = 'fulfilled';
                 this._resolve(res);
             },
             // reject 函数
@@ -24,13 +42,16 @@
             var preResult = onFullfilled(this.currentValue);
             nextResolve(preResult);
         },
-        // 起码有个 then 方法。如果resolve了，执行then里面的方法
+        // 这个promise起码有个 then 方法
+        // 如果resolve了，执行then里面的方法
         then: function(onFulFilled) {
+            // 记一下参数
             this.onFulFilled = onFulFilled;
             var nextResolve = null;
             var nextReject = null;
             // then 里面返回需要是一个 promise
             // 外面怎么调用  Promise 里的 resolve，不提供Promise.resolve 这种形式
+            // 为了可以一个resolve两个then
             this.next = new Promise((resolve, reject) => {
                 nextResolve = resolve;
                 nextReject = reject;
@@ -43,7 +64,7 @@
 
             // 如果先执行了resolve函数的话
             if (this._status === 'fulfilled') {
-
+                onFulFilled(this.currentValue)
             }
             return this.next;
         },
