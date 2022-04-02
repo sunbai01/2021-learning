@@ -25,7 +25,7 @@ react 高级（头条 react系少一些，vue多一些）
 </React.Fragment>
 
 
-## context
+## context(完成跨越式的传变量)
 
 主组件传递数据到孙子组件
 
@@ -38,6 +38,16 @@ react 高级（头条 react系少一些，vue多一些）
 
 ## hook
 
+函数式组件
+useState
+
+// setPrice 类似于 setState
+const [price, setPrice] = useState(0);
+
+为什么定义成数组不定义成对象呢？因为对象的话，他不知道key要叫什么，所以做了一个后置的状态，把权利放给你，你爱叫什么叫什么
+
+
+useEffect 每次组件在渲染的时候都会被调用
 
 
 ## 异步组件（react侧叫他代码分割）
