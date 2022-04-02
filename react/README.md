@@ -48,14 +48,21 @@ const [price, setPrice] = useState(0);
 
 
 useEffect 每次组件在渲染的时候都会被调用
+可以返回一个函数
+
+useEffect(() => {
+    // 监听
+    console.log('start')
+
+    return () => {
+        // 取消监听
+        console.log('done')
+    }
+})
 
 
+使用场景：渲染的时候监听点什么，销毁的时候去取消监听
 ## 异步组件（react侧叫他代码分割）
 
 用法：原组件套 React.lazy, 引入的地方套 suspense 接受 fallback 一个 props
 场景：+ 跳转到 setting 页面
-
-
-
-
-
