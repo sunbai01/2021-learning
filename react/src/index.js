@@ -35,7 +35,9 @@ class Main extends Component {
                 datasource ={ this.state.list }
                 renderItem = {item => {
                     console.log('item', item);
-                    return <div>111</div>
+                    const type = item.type.replace(/^\w/, code => code.toUpperCase())
+                    const itemComponent = components[type];
+                    return <itemComponent />
                 }}
             />
         </div>)
