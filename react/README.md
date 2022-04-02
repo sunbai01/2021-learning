@@ -1,8 +1,7 @@
 react 高级（头条 react系少一些，vue多一些）
 
-## context
 
-## 高阶组件
+# 高阶组件
 
 ## hoc：传一个组件进去，返回一个新组件
 
@@ -25,11 +24,26 @@ react 高级（头条 react系少一些，vue多一些）
 代替div的根元素
 </React.Fragment>
 
+
+## context
+
+主组件传递数据到孙子组件
+
+使用：
+1、在 tab-context 中 定义 React.createContext
+2、在主组件中使用tab-context.provider value props 想传输的数据
+3、在下下层组件中直接this.context 访问数据
+
 ## propTypes
 
 ## hook
 
-## 异步组件
+
+
+## 异步组件（react侧叫他代码分割）
+
+用法：原组件套 React.lazy, 引入的地方套 suspense 接受 fallback 一个 props
+场景：+ 跳转到 setting 页面
 
 
 

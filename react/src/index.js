@@ -6,6 +6,10 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import List from './list';
+import * as components from './components';
+import TabContext from './tab-context';
+
+const SettingCompontent = () => import('./setting');
 
 class Main extends Component {
     constructor(props) {
