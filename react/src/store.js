@@ -11,7 +11,7 @@ const toutiaoProcessor = (state = {list: []}, action) => {
     return state;
 };
 
-// 柯理化的，只接受下一环,让dispatch去支持 promise
+// 柯理化的，只接受下一环,让dispatch去支持 promise，支持异步
 const reduxPromise = ({dispatch, getState}) => next => action => {
     console.log('reduxPromise:::', action, next);
     if (typeof action.then === 'function') {
@@ -23,3 +23,5 @@ const reduxPromise = ({dispatch, getState}) => next => action => {
 const store = createstore(toutiaoProcessor, applyMiddleWare());
 
 export default store;
+
+// this.context 这样拿store

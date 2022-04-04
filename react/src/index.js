@@ -91,6 +91,9 @@ const App = connect(
     }
 )(Main);
 
+// 两种用法：
+// 1、<Provider.元素>
+// 2、<Provider> 套 <元素> 
 ReactDOM.render(
     <Provider store={store}>
         <App />
