@@ -103,14 +103,23 @@ export class Switch extends Component {
 
 // 架构思路：1、fragment包裹传入的component 或者 fragment，this.context 和 this.props
 // 2、做一个 matcher 函数，比较 pathname 和 location 是否相等，相等则动态渲染组件
-// 3、
 
 export class Route extends Component {
      
 }
 
-
+// 加了个 a 标签 而已
 export class Link extends Component {
+    static contextType = RouterContext;
+
+    render() {
+        this.context
+        return 
+    }
+
+    navigateTo() {
+
+    }
      
 }
 

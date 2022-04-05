@@ -34,6 +34,38 @@ react-router的基本架构
 
 react-router-native
 react-router-dom
+还是 react 的思想先进，vue 要记的东西太多了。
+todo：switch
 
 2、骨架屏
+
+dangerouslySetInnerHTML = {{_html: html}}
+
+将页面再写一份灰底的,生成一个离线字符串
+
+1、用这个插件 page-skeleton-webpack-plugin
+2、webpack里配置：
+
+插件里做了什么呢。访问了下url，把html拿出来，拿他自己的js去生成模板字符串
+
+大量时间去维护，就得不偿失了。
+
 3、ssr的入门
+
+server send render
+
+css-modules-require-hook 处理js中的css
+
+# 面试题
+
+react dom 的 viercul dom 真的比dom 快吗，diff算法的复杂度是多少，是怎么实现的呢
+
+vdom 不一定比 dom 快，在同等级别的情况下，用 react 可能 比 不用的性能差，没有原生快
+
+框架是帮写前端写的不咋地的人规范起来。
+
+todo：
+fiber
+diff算法
+
+
