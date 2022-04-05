@@ -26,3 +26,14 @@ this.props.match.params.id
 2、再渲染，只要匹配到的都渲染
 3、如何只渲染一个呢，switch
 4、场景：配404页面，在组件路由最后加一个 route组件，前面没匹配到的，漏下去就好了（注重用户体验），做spa的时候
+
+# react 实战
+
+1、react-router
+react-router的基本架构
+
+react-router-native
+react-router-dom
+
+2、骨架屏
+3、ssr的入门
