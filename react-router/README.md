@@ -58,7 +58,7 @@ css-modules-require-hook 处理js中的css
 
 # 面试题
 
-react dom 的 viercul dom 真的比dom 快吗，diff算法的复杂度是多少，是怎么实现的呢
+react dom 的 virtual dom 有什么优势？真的比dom 快吗？diff算法的复杂度是多少？是怎么实现的呢
 
 vdom 不一定比 dom 快，在同等级别的情况下，用 react 可能 比 不用的性能差，没有原生快
 
