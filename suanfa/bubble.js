@@ -1,35 +1,48 @@
-// 冒泡排序 37分钟
-// 相邻元素两两比较，解释这种例子都会把最大的放在最左边
+// 冒泡排序 (37分钟)
+// 概念：相邻元素两两比较，解释这种例子都会把最大的放在最左边
+// 图解：每循环一次，最大的数在最右边，然后缩小循环范围，和堆排序一样的
+// 时间复杂度: 起码是O(1)
+// 程序：
+// 首先讲下循环,可以有以下两种
+// let loopCount = mock.length;
+// while(loopCount -- ){
 
-const mock = [10, 5, 7, 9, 4, 21, 3, 6];
-// 将数组转化为数组对象
+// }
 
-mock.replace(/(+d)/g, ()=> {
+// or
 
-});
+// for (let i=mock.length; i>0; i++) {
 
+// }
+
+// 数据源
+const mock = [5, 7, 9, 4, 10, 21, 3, 6];
+console.log('mock:::', mock);
+// 将数组构造成一个对象型
+// '[10, 5, 7, 9, 4, 21, 3, 6]'.replace(/(\d+)/g, '{value: $1}');
+
+// ab互换
 const swap = (arr, from, to) => {
     // 交换纯数据方法1、
     // let temp = arr[from];
     // arr[from] = arr[to];
     // arr[to] = temp;
-    // 方法2、
-    [arr[from], arr[to]] == [arr[to], arr[from]];
+    // 方法2、es6的解构
+    [arr[from], arr[to]] = [arr[to], arr[from]];
     // 方法3、
     // arr[from] = arr[from] + arr[to];
     // arr[to] = arr[from] - arr[to];
     // arr[from]= arr[from] - arr[to];
 }
 
-const sort = (arr) => {
-    //  start, end
-    // 0, mockData.length
-    swap(arr, 0, 2);
-
-    for (let i = mockData.length; i > 0; i--) {
+// 排序
+const sort = arr => {
+    // 首先外部一定循环length轮
+    for (let i = mock.length; i > 0; i--) {
+        // 8length 0-7
         for(let j = 0; j < i-1; j++){
             // if(arr[i].value > arr[j+1].value) {
-            if(arr[i] > arr[j+1]) {
+            if(arr[j] > arr[j+1]) {
                 swap(arr, j, j+1);
             }
         }
