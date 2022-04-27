@@ -64,7 +64,7 @@ app.css 会被每个页面引
 setData 和 点击事件 都是视图层给逻辑层发消息，简称通讯，为什么setData不能频繁调，因为会往返于两个进程，拖慢速度（不停的双向通讯）
 逻辑层向视图层发消息，视图层向逻辑层发消息。
 
-api就没碰过dom，querySelector这是个假api，为什么假呢，因为他是异步的，只是返回数据，碰不到dom
+api就没碰过dom，querySelectorapi，为什么假呢，因为他是异步的，只是返回数据，碰不到dom
 
 rpx 和 view 是怎么识别的？
 view其实就是一个自定义组件，本质是 template 里有 span 和 slot ，区别在于 属性，这些高阶属性就是对外暴露的 props ,重建 web 生态系统，这是一个宏大的愿景

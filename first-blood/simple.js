@@ -13,6 +13,8 @@ executionFuncOuter();
 
 # scopeChain（作用域链）
 
+// 作用域链和执行栈没关系
+
 如上函数会形成一个执行栈 // ECMA第六版的规范，会在定义栈向上找，但不会在执行栈向上找
 |  inner() |
 |  outer() |
@@ -79,7 +81,7 @@ function Person() {
     // 返回一个新对象
     return {
         attack: function(body) {
-            body.blood = this._attackValue - body.defense;
+            body.blood = _attackValue - body.defense;
         }
     }
 }
@@ -157,9 +159,8 @@ listDataManager.getData()
         console.log('res--');
     });
 
-// mpVue -> vue的源码
-// wepy
-// mpx
+// mpvue -> vue
+// taro -> react
 
 // 通过游戏讲面向对象
 

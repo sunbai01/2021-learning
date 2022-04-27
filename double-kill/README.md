@@ -58,6 +58,13 @@ var monster = newObj;
 
 <!-- 这种情况可以共享Body这个构造函数里的值，也就是 monster 和 monster2 都是实例，改实例中的谁另一个都会跟着改，？？？QA3:那么这个东西有什么用呢？？？ -->
 
+NEW!
+
+创建一个函数，函数内必有 prototype，创建函数的时候，同时会创建一个对象，对象内有一个属性叫constructor
+他和 prototype 互相指
+
+对象的 _proto_ 也指向 prototype
+
 <!-- 实例对象的__proto__（这个学名叫原型）就是构造函数的prototype（每个构造函数都会有一个protoType属性） -->
 
 <!-- 其实 实例对象的[[protoType]]属性也指向构造函数的protoType，这样就能访问构造函数中的属性了 -->
@@ -91,7 +98,7 @@ Person.prototype = {
 
 上面的代码在es6中的写法是
 
-<!-- class es6中类的语法糖 -->
+<!-- class => es6中类的语法糖 -->
 class Person {
     constructor() {
         this._attackVolum = 100;
