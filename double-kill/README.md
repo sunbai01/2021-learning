@@ -169,7 +169,9 @@ var monster2 = new Monster();
 monster._bloodVolum = 999  
 
 // 是因为这个语句是给monster这个实例上的赋值语句，在本身挂了个_bloodVolum,所以不用去 Body上找了,这种方式的修改在实例间不联动
-// 而上面那种方式联动是因为 对象有两个属性操作符 => monster.Volumes._bloodVolum,浏览器看到这句话的时候会想拿_bloodVolum，先要拿到【monster.Volumes】，monster.Volumes在monster上没有，所以需要去Monster上找，而monster._bloodVolum，要想拿到_bloodVolum，需要找到monster，还没到Monster那一步呢,属性屏蔽规则
+// 而上面那种方式联动是因为 对象有两个属性操作符 => monster.Volumes._bloodVolum,浏览器看到这句话的时候会想拿_bloodVolum，先要拿到【monster.Volumes】，
+monster.Volumes在monster上没有，所以需要去Monster上找，
+而monster._bloodVolum，要想拿到_bloodVolum，需要找到monster，还没到Monster那一步呢,属性屏蔽规则
 
 ## 方法2：原型链 + 构造函数 继承
 
@@ -191,7 +193,6 @@ Monster.prototype = new Body();
 
 var monster = new Monster(name);
 var monster2 = new Monster(name);
-
 
 这种方式也不好的一点是：使用方不知道该new啥，因为传参不知道传啥，需要先有一个样例
 
@@ -264,3 +265,4 @@ class Monster extends Body {
 
 
 
+【类（面向对象），设计模式，继承】

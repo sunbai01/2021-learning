@@ -1,4 +1,4 @@
-- 手写 promise 
+- 手写 promise
 
 promise.js
 
@@ -14,16 +14,16 @@ Object.defineProperty(obj, 'name', {
         console.log('getting');
         return '111';
     }
-})
+});
 
-obj.name
+obj.name // 111
 
 Vue如何做到修改数据后，视图就变化了的
-
 
 let target = {
     isTarget: 1;
 };
+
 let proxy = new Proxy(target, {
     get() {
         return '111';
@@ -178,3 +178,4 @@ class Foo {
 语法：首先装饰器是一个函数
 
 
+【手写 promise ，代理和反射，装饰器，async、await，】

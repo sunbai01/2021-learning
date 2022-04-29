@@ -1,46 +1,3 @@
-// // 先来个闭包，把变量封住
-// (function() {
-//     // 准备资源
-//     const context = document.getElementById('content').getContext('2d');
-//     const heroImg = new Image();
-//     const allSpriteImg = new Image();
-
-//     heroImg.onload = function() {
-//         var imgPos = {
-//             x: 0,
-//             y: 0,
-//             width: 32,
-//             height: 32
-//         };
-
-//         // 做过一段时间server端
-//         var rect = {
-//             x: 0,
-//             y: 0,
-//             width: 40,
-//             height: 40
-//         };
-
-//         context
-//             .drawImage(
-//                 heroImg,
-//                 imgPos.x,
-//                 imgPos.y,
-//                 imgPos.width,
-//                 imgPos.height,
-//                 rect.x,
-//                 rect.y,
-//                 rect.width,
-//                 rect.height
-//             );
-
-//     }
-//     heroImg.src = './hero.png';
-// })();
-
-
-
-// 以上代码可以用小闭包优化抽象出来, 编程习惯 - 依赖注入
 (function() {
     //  1
     function prepare() {
@@ -128,7 +85,7 @@
         // 一个方法里面返回了个新对象
         // 魔王这块再拆解，红衣魔王，黑衣魔王，如何不通过入参区分开，这里要说到继承
         function Monster(initPos) {
-            this.img= heroImg,
+            this.img= allSpriteImg,
             this.context= context,
             this.imgPos= {
                 x: initPos.x,
@@ -143,12 +100,11 @@
                 height: 40
             }
         }
-
         Monster.prototyp.draw = draw;
 
         function RedMonster(initPos) {
             Monster.call(this, initPos)
-            // 红魔王集体放大
+            // 红魔王集体放大（这里有个重写）
             this.imgPos= {
                 x: initPos.x,
                 y: initPos.y,
@@ -156,7 +112,6 @@
                 height: 40
             }
         }
-
         RedMonster.prototype = Object.create(Monster.prototype);
 
         var monster = new Monster({x:2, y:3});
@@ -182,7 +137,3 @@
         });
     });
 })();
-
-
-// 让英雄能前后左右动，pm只让一个hero动怎么办
-// 面试题

@@ -63,7 +63,7 @@ function request(url, timeout = 100, callback = defaultCallback()){
 
 request('111', 222);
 
-注意：defaultCallback() 中的括号不会立即执行，也不会有缓存
+注意：defaultCallback() 中的括号不会立即执行，只会在函数体中用到callback的时候才执行，也不会有缓存
 
 4、
 - 扩展运算符  ... 
@@ -270,8 +270,6 @@ personClass.staticMethod = function() {
 
 }
 
-// ? 这里继承没搞懂
-
 - promise
 
 promise 怎么控制流程？ 看下下面例子，然后进行改造；
@@ -397,3 +395,6 @@ Promise.all([task1, task2])
 - promise 的三种状态 ？？ 这里听的不太细，反正状态不能变更就对了
 
 pending fulfilled  rejected
+
+
+【babel，块级作用域，扩展运算符，箭头函数，es6新增的使用和方法，promise使用，promise规范】
