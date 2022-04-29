@@ -43,7 +43,11 @@ proxy做的事情是拦截一个对象，做钩子
 
 - async、await
 
-async
+async 表明后面的程序可能有异步过程,可以当做promise用
+
+await 只能在 async 后面函数里使用，且只会阻塞async函数进程，不会阻塞主进程
+
+- async
 
 <!-- 这是一个 async 的函数 -->
 
@@ -57,10 +61,9 @@ async function a() {
     request();
     console.log('aaa');
 }
-a();
+a(); // aaa request
 
-// 输出 aaa request
-
+<!-- 需求：1秒钟之后打印一个111 -->
 (new Promise((resolve, reject) => {
     setTimeout(function(){
         console.log('request');
@@ -68,11 +71,10 @@ a();
     }, 1000);
 }))
     .then(res => {
-        console.log('res', res);
+        console.log('res', res); // request 111
     })
 
-<!-- 输出 request，111-->
-<!-- 同样的代码用async写会怎样呢 -->
+<!-- 同样的代码用async会怎样写呢 -->
 
 function request(){
     return new Promise((resolve, reject) => {
@@ -93,12 +95,6 @@ a();
 console.log('end')
 
 <!-- 输出 end 111 aaa -->
-
-async 表明后面的程序可能有异步过程,可以当做promise用
-
-await 可能会阻塞进程的渲染，且只能在 async 后面函数里使用
-
-* await只会阻塞async函数进程，不会阻塞主进程
 
 1、async有什么用呢？ 直接当做promise用，只是写法不同，功能是一样的
 async function a() {
@@ -137,7 +133,7 @@ request('http')
 
     })
 
-3、<!-- promise.then 是异步的，本身不是异步的，这里很重要 -->
+3、promise.then 是异步的，本身不是异步的，这里很重要
 
 new Promise ((resolve, reject) => {
     console.log('111')
@@ -151,13 +147,25 @@ console.log('333')
 // 111 333 222
 
 
-
-
-
 - 拿fetch举例，怎么改造一个Promise对象呢?
 
-非file协议的url，需要起一个端口
+非http协议的url（file://xxx），需要起一个端口
 
+fetch('xxx')
+    .then(res => {
+        console.log('res:::', res);
+    })
+
+=>
+
+async function a() {
+    var taobaoRes = await fetch('xxx')
+    .then(res => res.json())
+    console.log('taobaoRes', taobaoRes);
+    return 222;
+}
+
+a();
 
 - 装饰器 decorator(设计模式)
 
@@ -178,4 +186,4 @@ class Foo {
 语法：首先装饰器是一个函数
 
 
-【手写 promise ，代理和反射，装饰器，async、await，】
+【代理，async、await，装饰器，手写 promise】
