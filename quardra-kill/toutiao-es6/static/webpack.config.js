@@ -1,7 +1,7 @@
 module.exports = {
     // 会帮忙压缩
     mode: 'production',
-    entry: _dirname + '/src/index.js',
+    entry: __dirname + '/src/index.js',
     output: {
         path: _dirname + '/dist/',
         filename: 'index.js'

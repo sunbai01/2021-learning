@@ -102,16 +102,13 @@ this[_symbol] = 'xxx';
 
 DOM 事件模型 和 事件流
 
-阻止冒泡行为
-
-stopPropagation()
-
-stopImmediatePropagation()
+阻止冒泡行为：stopPropagation() 和 stopImmediatePropagation()【少用】
 或者 remove 插件里绑定的click 事件
 
-阻止默认行为:（可以使点击没反应）
+阻止默认行为:（使用场景：可以使原有点击出弹窗没反应，然后覆盖一个自己的上去）
 e.preventDefault();
 
+先选中这个元素然后 $0 ,控制台会出现这个元素
 - 
 
 sessionStorage localStorage cookie 之间
@@ -122,6 +119,12 @@ cookie 会被携带到服务端，可以存放服务端和前端共同维护的�
 
 localStorage 是持久化的本地存储，sessionStorage会话级别的存储（要求在同一浏览器窗口才能互相读取）
 
+什么时候存 cookie 什么时候存localstorge
+
+http是无状态的协议，
+
+toC做兼容
+toB不用做兼容
 
 
 

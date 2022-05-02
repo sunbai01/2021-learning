@@ -17,7 +17,7 @@ let promise = new Promise((resolve, reject) => {
 // 如何手写一个promise
 (function(global) {
     // 定义一个promise的类
-    function Promise(processor){
+    function Promise(processor) {
         // 会在创建的时候执行一下processor
         // 定义一个状态为pending，pending的时候不执行任何函数
         this._status = 'pending';

@@ -186,4 +186,4 @@ class Foo {
 语法：首先装饰器是一个函数
 
 
-【代理，async、await，装饰器，手写 promise】
+【代理，async、await，装饰器，手写 promise(不太会)，模块化，浏览器模型，浏览器存储】
