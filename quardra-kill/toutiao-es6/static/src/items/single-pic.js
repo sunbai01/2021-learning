@@ -5,7 +5,7 @@
 
 
 // 规范：命名文件的时候不要做驼峰，要使用中划线的形式
-// 类头字母要大写
+// 类头字母要大写，表明这是个类的身份🆔
 import Component from './component' 
 export default class SinglePic extends Component{
     constructor(props) {

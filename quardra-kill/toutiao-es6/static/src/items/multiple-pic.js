@@ -6,6 +6,7 @@
 
 import Component from './component' 
 export default class MultiplePic extends Component{
+
     constructor(props) {
         super(props);
     }

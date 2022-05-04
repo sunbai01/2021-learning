@@ -4,12 +4,12 @@
 */
 
 /**
-* @desc 网络请求冯封装，项目内请走这个封装
+* @desc 网络请求封装，项目内请走这个封装
 * @param {Object} - [params] 发请求用的参数
 * @return {Promise} 请求的 Promise 任务对象
 */
 
-// treeShaking 可以过滤函数
+// treeShaking 可以过滤函数（正常引文件，但会过滤掉用不到的函数）
 
 export const request = params => {
     // params.methods
@@ -21,7 +21,8 @@ export const request = params => {
     //     method: 'GET'
     // })
     // 浅拷贝，因为我们不改东西，如果改的话就要深拷贝了
-    let requestParams = {
+    const requestParams = {
+        // 复制对象的方法
         ...params,
         method: (params.method && params.method.toUpperCase()) || 'GET'
     }
@@ -29,7 +30,9 @@ export const request = params => {
     // var newParams = JSON.parse(JSON.stringify(params))
     // axios，徒手撸代码，$.ajax
     return fetch(
+            // fetch 的第一个参数是url
             requestParams.url,
+            // fetch 的第二个参数是params
             requestParams
         )
         .then(res => {
