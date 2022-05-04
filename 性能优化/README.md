@@ -77,15 +77,54 @@ Transfer-Encoding: chunked
 // 逆置，先加载死的数据，然后叠加个性化的数据
 
 
-
-
-
-
-
-
-
 todo： script 的 defer or async 他俩的区别
 
+----------------------------------------------- 
+
+两种缓存
+
+1、浏览器缓存
+
+很多缓存头：
+cache-control: 优先级大于Expires
+no-cache(不缓存)/max-age=10(s为单位) 两次访问同一资源，未超过10s，则用浏览器缓存里的内容（都是返回200，用cache则显示from memory cache）
+Expires：缓存到什么时候，是个格林时间
+
+上面是不访问服务器，直接访问本地（cache first），浏览器主导
+
+Etag + If-None-Match
+Etag是服务端返回的一个hash，浏览器做缓存，下次请求的时候浏览器用If-None-Match带过去，如果相同则返回304，如果不相同则返回200
+
+last-modified（response 头中） + If-Modify-Since(request 头中)
+
+访问服务器，服务器做出决断，直接返回304还是返回 200 + 内容，服务器做主导
+
+
+2、service worker
+
+将 fetch 拿到手，且是promise形式，fetch 成功后用 catch 的put方法存一下，fetch失败的话从cache里面拿
+
+app shell 利用 service worker 将一些万年不变的资源缓存，从而加载的是个壳子，打开的时候很快的打开
+
+为什么离线缓存这么重要，使前端体验不如客户端？
+
+适用场景：弱网 && 间歇性网络
+
+app 会框架 + loading
+web 会直接 404 
+
+所以我们需要讨论这种情况下骨架屏怎么出？
+
+pwa 和 ssr 的对比？
+
+pwa 是 前端渲染（省下载时间）
+ssr 是 server端渲染（省js渲染时间），之前是这种方案居多，首屏数据就是往上走
+
+
+
+
+
+ 
 
 
 
