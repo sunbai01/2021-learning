@@ -35,7 +35,56 @@
 
 - 字段解析
 
+performance.timing.navigationStart // 跳转开始
 
+performance.timing.domainlookupend/start // 域名查询ip地址结束时间
+
+performance.timing.connectstart/end // tcp握手链接时间
+
+performance.timing.secureConnectionStart // https
+
+performance.timing.requestStart //  request 时间
+
+performance.timing.responseStart/end //  response 时间
+
+performance.timing.domLoading // 浏览器开始解析dom
+
+- 性能优化思路
+
+正着查：看代码捋
+
+倒着查：录屏查事件
+
+<link href="" rel="stylesheet">
+
+link 写在head下body上，link会阻塞下面dom的渲染吗？
+会阻塞渲染，css没加载，全局都炸
+
+原理：head中有css 标签，会加载完后再向下执行，挺着不执行，防止二次重绘
+所以会有一些css转内联这种手段去转内联
+
+浏览器会等script代码执行，所以还是会导致白屏（因为怕js里改dom），这个时候应该怎么办呢？
+强行转化为异步，可以改这种情况
+
+一个站点下，有并行发6个请求的限制：
+<!-- 1、打散域名的方式：多域名访问同一个资源  -->
+
+big-pipe（性能优化的王牌）: 
+<!-- 抛出合作的底牌，减少白屏时间 -->
+Transfer-Encoding: chunked
+// 如果header有这个字段，表明这个请求是分波加载的，分波渲染
+// big-pipe的原理：借助了http协议 + 分片
+// 逆置，先加载死的数据，然后叠加个性化的数据
+
+
+
+
+
+
+
+
+
+todo： script 的 defer or async 他俩的区别
 
 
 
