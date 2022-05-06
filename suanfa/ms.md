@@ -38,4 +38,61 @@ const bfs = () => {
     }
 }
 
+tips：
+图论，数论，几何学，博弈论
+数论：rsa算法 => 欧拉，jcd
+
+
+```js
+题干：手里有n根树枝，n根树枝一样长，且长度为d，闲来无事，将n根树枝随意切了一下，切完之后有m根棍子，
+此时石老板忘记了n和d都是多少，求d最小的可能性
+
+// 看不出来的bfs
+const search = (sticks, originStickLen, curStickLen, visited) => {
+
+    if (visited.every(item =>{
+        item === 1
+    })) {
+        return true;
+    }
+
+    for (let i = 0; len=sticks.length; i<len; i++) {
+        visited[i]  = 1
+        if (curStickLen + sticks[i] < originStickLen) {
+            if(search(sticks, originStickLen, curStickLen + sticks[i], visited)) {
+                return true;
+            }
+            else if( curStickLen + sticks[i] === originStickLen) {
+                if(search(sticks, originStickLen, 0, visited)) {
+                    return true;
+                }
+            }
+
+        }
+        visited[i]  = 0;
+    }
+    return false;
+}
+
+const start = () => {
+    // 4根长度为6的棍  or 1根长度为24的棍，显然 4根长度为6的棍 是我们需要的答案
+    let sticks = [5, 2, 1, 5, 2, 1, 5, 2, 1];
+    let sum = eval(sticks.join(' + '));
+
+    for (let originStickLen = 0; originStickLen < sum; originStickLen ++) { 
+        let visited = Array(sticks.length).fill(0);
+        if(search(sticks, originStickLen, 0, visited)){
+            console.log('originStickLen:::', originStickLen);
+        };
+    }
+}
+
+start();
+```
+
+dfs & bfs 的区别是：
+    bfs的传播性质，bfs找到最短路， 是快的
+    dfs 遍历所有的情况，产出最优的排列组合，内存消耗上是占有优势的
+
+当遇到一个问题，当需要遍历所有决策情况的时候
 
