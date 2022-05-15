@@ -72,5 +72,7 @@ redux 和 vuex 有什么区别？
 
 拆分函数，前置处理，fetch value 提出来放到前面去处理
 
-为什么要用 proxy 替代 defineProperty（实际上是问 defineProperty 的局限性）？
+
+
+
 

@@ -7,8 +7,8 @@ dispatch 其实就是触发一次action，redux调用reducer对action进行特�
 
 为什么要用redux，系统比较大，交互比较多，readucer拆分比较多，
 <!-- 做的事情 -->
-1、创建了一个store，接收reducer，state两个参数；
-2、调用 dispatch 方法（间接的调用了reducer）
+1、createStore创建了一个store（实例有两个方法：dispatch 和 getstate），接收reducer，state两个参数；
+2、调用 dispatch 方法，触发reducer特判去改state
 3、获取当前的新的 state
 
 核心是createStore这个api，返回值有dispatch和getState这两个方法
