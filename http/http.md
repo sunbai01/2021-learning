@@ -60,6 +60,25 @@ libuv实现跨平台的异步编程
 
 http_parser 用于http的解析
 
+<!-- tcp源码 -->
+
+tcp 源码中最核心的：
+
+function createServer(options, connectionListener) {
+    return new Server(options, connectionListener);
+}
+
+创建 TCP 服务器的过程
+1、调用 net.createServer() 创建 server对象，该对象创建完后，调用listen()方法执行监听操作
+2、在listen（）方法内解析相关参数，然后调用listeninCluster（）方法
+3、由于该进程是主进程，所以listeninCluster（）方法会直接调用_listen2（）方法
+4、因为_listen2（）方法是指向 setuplistenhandle 函数，所以最终调用的是 setuplistenhandle 函数。
+该函数的主要作用是调用 createServerhandle 函数创建对应的handle对象（本例为tcp对象），并为对象设置
+onconnection处理器，然后把返回的对象赋值给server对象的_handle属性
+5、服务器接收到连接请求时，会调用 onconnection 处理器，随后创建 socket 对象，并触发 connection 事件，
+执行我们设置的 connectionListener 监听函数
+
+<!-- DNS -->
 
 
 
